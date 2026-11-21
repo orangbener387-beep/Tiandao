@@ -308,7 +308,7 @@ const tier=()=>[...TIERS].reverse().find(t=>read.size>=t.min);
 const rank=()=>tier().n;
 const saveAll=()=>{st.set("td_saved",[...saved]);st.set("td_read",[...read]);st.set("td_prof",prof);st.set("td_fs",fs)};
 /* ===== Login Google + sinkron antar perangkat (Google Drive appDataFolder) ===== */
-const GOOGLE_CLIENT_ID="";/* ISI dengan OAuth Client ID (Web) dari Google Cloud Console */
+const GOOGLE_CLIENT_ID="122674542114-t0lst7kdhj6sv5fb8htpibiktp42uhu8.apps.googleusercontent.com";/* ISI dengan OAuth Client ID (Web) dari Google Cloud Console */
 const SYNC_KEYS=["td_saved","td_read","td_prof","td_fs","td_prem","td_game","td_theme"];
 let gUser=st.get("td_guser",null),gTok=null,gTokExp=0,gClient=null,gFile=null,syncT=null,applyingCloud=false,gLast=st.get("td_glast",0),gTry=0,gBusy=false;
 {const _s=st.set;st.set=(k,v)=>{_s(k,v);if(!applyingCloud&&SYNC_KEYS.includes(k))schedSync()}}
