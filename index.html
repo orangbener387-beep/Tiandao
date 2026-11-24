@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; img-src 'self' data: blob:; media-src data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; img-src 'self' data: blob:; media-src data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://accounts.google.com/gsi/; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- SAKELAR DARURAT: ubah "active" jadi true lalu unggah ulang file ini untuk memunculkan popup merah. "audience": "login" = hanya yang login Google, "all" = semua pengunjung. -->
 <script type="application/json" id="darurat">{"active":false,"audience":"login","message":""}</script>
@@ -487,7 +487,7 @@ function render(){
     document.querySelectorAll(".bk-slider").forEach((sl,n)=>{const f=sl.firstElementChild;if(f&&f.animate&&!matchMedia("(prefers-reduced-motion:reduce)").matches)setTimeout(()=>f.animate([{transform:"translateX(0)"},{transform:"translateX(-34px)",offset:.4},{transform:"translateX(0)"}],{duration:1100,easing:"ease-in-out"}),500+n*250)})}
   const av=prof.av;$("profBtn").textContent=av;updPrem();
 }
-const BOOKS='<div class="bk-title">Ten Youthful Souls Forging Multiverse Justice</div><div class="bk-slider"><div class="bk-row"><div class="bk"><div class="bk-cover" style="--c1:#1f6b4c;--c2:#0f3a2a"></div><div class="bk-name">Season 1</div></div><div class="bk"><div class="bk-cover" style="--c1:#7a2a2f;--c2:#3d1216"></div><div class="bk-name">Season 2</div></div></div><div class="bk-row"><div class="bk"><div class="bk-cover" style="--c1:#1f6b6b;--c2:#0f3a3a"></div><div class="bk-name">Season 3</div></div><div class="bk"><div class="bk-cover" style="--c1:#5a2a6b;--c2:#2c123a"></div><div class="bk-name">Season 4</div></div></div></div><div class="bk-dots"><i class="on"></i><i></i></div><div class="bk-title">Kaisar Cang Ling Xiao</div><div class="bk-slider"><div class="bk-row"><div class="bk"><div class="bk-cover" style="--c1:#1f4a7a;--c2:#0f243d"></div><div class="bk-name">Season 1</div></div><div class="bk"><div class="bk-cover" style="--c1:#6b4a1f;--c2:#3a270f"></div><div class="bk-name">Season 2</div></div></div><div class="bk-row"><div class="bk"><div class="bk-cover" style="--c1:#5f6b1f;--c2:#2f360f"></div><div class="bk-name">Season 3</div></div><div class="bk"><div class="bk-cover" style="--c1:#4a4f5a;--c2:#23262d"></div><div class="bk-name">Season 4</div></div></div></div><div class="bk-dots"><i class="on"></i><i></i></div>';
+const BOOKS='<div class="bk-title">Ten Youthful Souls Forging Multiverse Justice</div><div class="bk-slider"><div class="bk-row"><div class="bk" data-book="t1"><div class="bk-cover" style="--c1:#1f6b4c;--c2:#0f3a2a"></div><div class="bk-name">Season 1</div><div class="bk-price" data-price="s1"></div></div><div class="bk" data-book="t2"><div class="bk-cover" style="--c1:#7a2a2f;--c2:#3d1216"></div><div class="bk-name">Season 2</div></div></div><div class="bk-row"><div class="bk" data-book="t3"><div class="bk-cover" style="--c1:#1f6b6b;--c2:#0f3a3a"></div><div class="bk-name">Season 3</div></div><div class="bk" data-book="t4"><div class="bk-cover" style="--c1:#5a2a6b;--c2:#2c123a"></div><div class="bk-name">Season 4</div></div></div></div><div class="bk-dots"><i class="on"></i><i></i></div><div class="bk-title">Kaisar Cang Ling Xiao</div><div class="bk-slider"><div class="bk-row"><div class="bk" data-book="c1"><div class="bk-cover" style="--c1:#1f4a7a;--c2:#0f243d"></div><div class="bk-name">Season 1</div></div><div class="bk" data-book="c2"><div class="bk-cover" style="--c1:#6b4a1f;--c2:#3a270f"></div><div class="bk-name">Season 2</div></div></div><div class="bk-row"><div class="bk" data-book="c3"><div class="bk-cover" style="--c1:#5f6b1f;--c2:#2f360f"></div><div class="bk-name">Season 3</div></div><div class="bk" data-book="c4"><div class="bk-cover" style="--c1:#4a4f5a;--c2:#23262d"></div><div class="bk-name">Season 4</div></div></div></div><div class="bk-dots"><i class="on"></i><i></i></div>';
 document.addEventListener("scroll",e=>{const sl=e.target;if(!sl.classList||!sl.classList.contains("bk-slider"))return;const d=sl.nextElementSibling;if(!d)return;const k=Math.round(sl.scrollLeft/sl.clientWidth);[...d.children].forEach((x,i)=>x.classList.toggle("on",i===k))},true);
 let backY=0;
 function setCat(c,scroll=true,b=true){const wasCat=document.body.classList.contains("view-category");if(b&&!wasCat)backY=window.scrollY;cat=c;browse=b;sub=null;if(!b){q="";$("searchInput").value="";flt="all";document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x.dataset.filter==="all"))}document.body.classList.toggle("view-category",b);document.body.classList.toggle("view-novel",b&&c==="Novel");
@@ -867,12 +867,12 @@ Promise.all([load(A.char),load(A.wm),load(A.blink)]).then(([ci,wi,bi])=>{
 })();
 </script>
 <script>
-/* ===== Logo Yin-Yang: pencet → hitam putih berputar pelan → keluar ke tengah → menyerap energi 4 detik → ikan koi muncul → berputar kencang & membesar → layar hitam → Novel ===== */
+/* ===== Logo Yin-Yang: berputar ke tengah → menyerap energi 6 dtk → berhenti 4 dtk (koi) → berputar & membesar → Novel ===== */
 (()=>{
 const YY='<svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true" style="display:block"><circle cx="50" cy="50" r="48" fill="#fff" stroke="#fff" stroke-width="3"/><path d="M50 2a48 48 0 0 1 0 96a24 24 0 0 1 0-48a24 24 0 0 0 0-48z" fill="#000"/><circle cx="50" cy="26" r="9" fill="#000"/><circle cx="50" cy="74" r="9" fill="#fff"/></svg>';
 let busy=false;
 const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
-const T_FLY=1100,T_ABS=4000,T_KOI=1000,T_GROW=2600,T_FADE=600;
+const T_FLY=1400,T_ABS=6000,T_STOP=4000,T_GROW=2800,T_FADE=600;
 const eo=p=>1-Math.pow(1-p,3),eio=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2,cl=p=>Math.max(0,Math.min(1,p));
 function yin(c,R,th,glow){
   c.save();c.rotate(th);
@@ -906,58 +906,68 @@ function run(seal,orig,sz,r,done){
   const cv=document.createElement("canvas");cv.width=W*dpr;cv.height=H*dpr;
   cv.style.cssText="position:fixed;inset:0;width:100%;height:100%;z-index:99999;pointer-events:all;touch-action:none";
   document.body.appendChild(cv);const c=cv.getContext("2d");
-  const cx=W/2,cy=H/2,sx=r.left+r.width/2,sy=r.top+r.height/2,R0=Math.min(W,H)*.2,Rmax=Math.hypot(W,H)*.95;
-  const N=240,P=[];
-  for(let i=0;i<N;i++){const al=Math.random()*Math.PI*2,D=Math.max(W,H)*(.62+Math.random()*.25);
-    P.push({ts:T_FLY+Math.random()*(T_ABS-1000),du:800+Math.random()*400,al,D,sw:(Math.random()<.5?-1:1)*(.7+Math.random()*.9),blk:Math.random()<.5,ok:false})}
-  const TH0=3*Math.PI;let abs=0;
-  const t0=performance.now(),tEnd=T_FLY+T_ABS+T_KOI+T_GROW+T_FADE;
+  const cx=W/2,cy=H/2,sx=r.left+r.width/2,sy=r.top+r.height/2,R0=Math.min(W,H)*.2,Rmax=Math.hypot(W,H)*.95,W0=5;
+  const t1=T_FLY,t2=T_FLY+T_ABS,t3=t2+T_STOP,tEnd=t3+T_GROW;
+  /* pita energi (seperti asap emas, tapi putih & hitam) */
+  const RB=[];for(let i=0;i<64;i++){const du=1700+Math.random()*900;RB.push({ts:t1+Math.random()*(T_ABS-du),du,al:Math.random()*Math.PI*2,D:Math.max(W,H)*(.6+Math.random()*.3),sw:(Math.random()<.5?-1:1)*(1.1+Math.random()*1.3),blk:Math.random()<.5,amp:10+Math.random()*16,ph:Math.random()*6.28,ok:false})}
+  /* percikan / pecahan energi */
+  const SP=[];for(let i=0;i<420;i++){const du=900+Math.random()*900;SP.push({ts:t1+Math.random()*(T_ABS-du),du,al:Math.random()*Math.PI*2,D:Math.max(W,H)*(.35+Math.random()*.5),sw:(Math.random()<.5?-1:1)*(.8+Math.random()*1.4),blk:Math.random()<.5,s:.8+Math.random()*2.2,tw:Math.random()*6.28})}
+  let abs=0;
+  const spot=(q,p,off)=>{const pp=Math.max(0,p),d=q.D*(1-Math.pow(pp,1.5)),a=q.al+q.sw*(1-pp)*1.2;return[cx+d*Math.cos(a),cy+d*Math.sin(a),a]};
+  const t0=performance.now();
+  let thStop=0;
   function frame(now){
     const t=now-t0;c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
-    // latar
-    const bgA=cl(t/600);c.fillStyle="rgba(6,6,10,"+bgA+")";c.fillRect(0,0,W,H);
-    let x,y,R,th,glow=0,koiA=0,tg=0;
-    if(t<T_FLY){const p=t/T_FLY;x=sx+(cx-sx)*eio(p);y=sy+(cy-sy)*eio(p);R=sz/2+(R0-sz/2)*eio(p);th=TH0*eo(p)}
-    else{x=cx;y=cy;R=R0;th=TH0;
-      const ta=t-T_FLY;
-      if(ta<T_ABS){}
-      else{koiA=cl((ta-T_ABS)/T_KOI)}
-      if(ta>=T_ABS+T_KOI){tg=(ta-T_ABS-T_KOI)/1000;
-        const g=cl(tg*1000/T_GROW);th=TH0+2.5*(Math.exp(1.3*tg)-1);R=R0+(Rmax-R0)*g*g}
-    }
-    // partikel
-    if(t>=T_FLY&&t<T_FLY+T_ABS+T_KOI){
-      c.lineCap="round";
-      for(const q of P){
+    c.fillStyle="rgba(6,6,10,"+cl(t/600)+")";c.fillRect(0,0,W,H);
+    let x=cx,y=cy,R=R0,th=0,glow=0,koiA=0;
+    if(t<t1){const p=t/t1;x=sx+(cx-sx)*eio(p);y=sy+(cy-sy)*eio(p);R=sz/2+(R0-sz/2)*eio(p);th=W0*t/1000}
+    else if(t<t2){th=W0*t/1000}
+    else if(t<t3){th=W0*t2/1000;koiA=cl((t-t2)/800)}
+    else{const tg=(t-t3)/1000;th=W0*t2/1000+2.5*(Math.exp(1.3*tg)-1);const g=cl((t-t3)/(T_GROW-T_FADE));R=R0+(Rmax-R0)*g*g;koiA=1}
+    /* energi */
+    if(t>=t1&&t<t2+300){
+      c.lineCap="round";c.lineJoin="round";
+      for(const q of RB){
         if(t<q.ts)continue;const p=(t-q.ts)/q.du;
-        if(p>=1){if(!q.ok){q.ok=true;abs++}continue}
-        const pos=pp=>{const d=q.D*(1-pp*pp),a=q.al+q.sw*(1-pp);return[cx+d*Math.cos(a),cy+d*Math.sin(a)]};
-        const [px,py]=pos(p),[qx,qy]=pos(Math.max(0,p-.07));
-        c.beginPath();c.moveTo(qx,qy);c.lineTo(px,py);
-        if(q.blk){c.strokeStyle="rgba(255,255,255,.4)";c.lineWidth=7;c.stroke();c.strokeStyle="#000";c.lineWidth=4;c.stroke()}
-        else{c.strokeStyle="rgba(255,255,255,.35)";c.lineWidth=7;c.stroke();c.strokeStyle="#fff";c.lineWidth=3;c.stroke()}
+        if(p>=1.15){if(!q.ok){q.ok=true;abs++}continue}
+        const head=Math.min(p,1),len=.42,STR=7,PTS=26;
+        for(let k=0;k<STR;k++){
+          const off=(k-(STR-1)/2);c.beginPath();let first=true,lx=0,ly=0;
+          for(let j=0;j<=PTS;j++){
+            const s=j/PTS,pp=head-s*len;if(pp<0)break;
+            const [px,py,a]=spot(q,pp);
+            const amp=q.amp*(1-pp)*Math.sin(s*6+q.ph+t/260),n=off*(2.4+s*3)+amp;
+            const ox=px+Math.cos(a+Math.PI/2)*n,oy=py+Math.sin(a+Math.PI/2)*n;
+            if(first){c.moveTo(ox,oy);first=false}else c.lineTo(ox,oy);lx=ox;ly=oy}
+          const al=(.55-.5*Math.abs(off)/STR)*(p>1?1-(p-1)/.15:1);
+          if(q.blk){c.strokeStyle="rgba(255,255,255,"+al*.5+")";c.lineWidth=2.6;c.stroke();c.strokeStyle="rgba(0,0,0,"+Math.min(1,al*1.6)+")";c.lineWidth=1.2;c.stroke()}
+          else{c.strokeStyle="rgba(255,255,255,"+al+")";c.lineWidth=1.1;c.stroke()}
+        }
       }
-      glow=Math.min(1,abs/N)*.9;
+      for(const q of SP){
+        if(t<q.ts)continue;const p=(t-q.ts)/q.du;if(p>=1)continue;
+        const [px,py]=spot(q,p),tw=.55+.45*Math.sin(t/70+q.tw),a=(p<.15?p/.15:1)*tw;
+        c.beginPath();c.arc(px,py,q.s*(1-p*.5),0,6.283);
+        if(q.blk){c.fillStyle="rgba(255,255,255,"+a*.55+")";c.fill();c.beginPath();c.arc(px,py,q.s*.62*(1-p*.5),0,6.283);c.fillStyle="#000";c.fill()}
+        else{c.fillStyle="rgba(255,255,255,"+a+")";c.fill()}
+      }
+      glow=Math.min(1,abs/RB.length)*.9;
     }
-    if(t>=T_FLY+T_ABS)glow=Math.max(0,.9-(t-T_FLY-T_ABS)/1500);
+    if(t>=t2){glow=t<t2+300?.9:Math.max(0,.9-(t-t2-300)/1500)*(t<t3?1:0)}
     c.save();c.translate(x,y);
-    const pul=t>=T_FLY&&t<T_FLY+T_ABS?1+.03*Math.sin(t/90)*Math.min(1,abs/N):1;
-    c.scale(pul,pul);
+    const pul=t>=t1&&t<t2?1+.03*Math.sin(t/90)*Math.min(1,abs/RB.length):1;c.scale(pul,pul);
     yin(c,R,th,glow);
     if(koiA>0){
-      const sc=R/R0,L=R0*.9*sc*eo(koiA);
-      c.globalAlpha=koiA;
-      const sw=(t-T_FLY-T_ABS)/1000*.9;
+      const sc=R/R0,L=R0*.9*sc*eo(koiA);c.globalAlpha=koiA;
+      const sw=(t-t2)/1000*.9;
       for(const k of[{a:Math.PI,f:"#fff",l:"#222"},{a:0,f:"#000",l:"#eee"}]){
-        const an=th+k.a+sw;c.save();c.rotate(an);c.translate(R*1.0,0);c.rotate(Math.PI/2);
-        koi(c,L,k.f,k.l,t/1000+k.a);c.restore()}
+        c.save();c.rotate(th+k.a+sw);c.translate(R,0);c.rotate(Math.PI/2);koi(c,L,k.f,k.l,t/1000+k.a);c.restore()}
       c.globalAlpha=1;
     }
     c.restore();
-    // akhir: layar hitam
-    const tf=t-(T_FLY+T_ABS+T_KOI+T_GROW-T_FADE);
+    const tf=t-(tEnd-T_FADE);
     if(tf>0){c.fillStyle="rgba(0,0,0,"+cl(tf/T_FADE)+")";c.fillRect(0,0,W,H)}
-    if(t<tEnd)requestAnimationFrame(frame);else{done(cv)}
+    if(t<tEnd)requestAnimationFrame(frame);else done(cv);
   }
   requestAnimationFrame(frame);
 }
@@ -1034,6 +1044,135 @@ document.addEventListener("click",e=>{
   if(t.dataset.rp){rp=t.dataset.rp;put("td_rp",rp)}
   apply();refresh();
 },true);
+})();
+</script>
+
+<style>
+.bk[data-book]{cursor:pointer}.bk[data-book]:active{transform:scale(.97)}
+.bk-price{margin-top:7px;font:700 14px Arial,sans-serif;color:var(--gold2)}
+.bk-price small{display:block;font:600 11px Arial,sans-serif;color:#9fc4a8;margin-top:2px}
+#bookPage{position:fixed;inset:0;z-index:40;background:var(--bg);color:var(--text);overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);transform:translateY(24px);opacity:0;visibility:hidden;transition:opacity .3s,transform .3s,visibility 0s .3s}
+#bookPage.show{transform:none;opacity:1;visibility:visible;transition:opacity .3s,transform .3s}
+.bpBar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 16px;background:linear-gradient(180deg,#0f7a56,#0b5c41);border-bottom:1px solid var(--gold)}
+.bpBar button{background:#0a2f21;color:var(--gold2);border:1px solid var(--gold);border-radius:10px;padding:9px 14px;font:600 14px Arial,sans-serif;cursor:pointer}
+.bpBar b{font:600 17px "Noto Serif",Georgia,serif;color:var(--gold2)}
+.bpBody{max-width:680px;margin:0 auto;padding:22px 20px 60px}
+.bkd{display:flex;gap:20px;align-items:flex-start}
+.bkd-cover{width:128px;height:182px;flex:none;margin:6px 8px 6px 4px}
+.bkd-info h1{margin:0 0 8px;font:700 22px/1.3 "Noto Serif",Georgia,serif;color:var(--gold2)}
+.bkd-s{font:600 16px Georgia,"Noto Serif",serif;color:var(--gold)}
+.bkd-bio{margin:22px 0 0;padding:18px 0 6px;border-top:1px solid var(--line)}
+.bkd-bh{display:block;font:700 16px "Noto Serif",Georgia,serif;color:var(--gold2);letter-spacing:.5px;margin-bottom:10px}
+.bkd-bio p{margin:0 0 14px;font:var(--fs)/1.8 Arial,sans-serif;color:var(--body)}
+.bkd-bio .bkd-tag{font-style:italic;color:var(--gold)}.bkd-bio .bkd-empty{font-style:italic;color:var(--muted)}
+.bkd-buy{margin-top:8px;padding-top:18px;border-top:1px solid var(--line)}
+.bkd-p{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:14px}.bkd-p b{font:700 24px "Noto Serif",Georgia,serif;color:var(--gold2)}
+.bkd-p span{background:#d9b76e;color:#2a1d05;border-radius:99px;padding:4px 10px;font:700 12px Arial,sans-serif}
+.bkd-lock{margin:12px 0 0;font:13px Arial,sans-serif;color:var(--muted)}
+.bpBtn{background:linear-gradient(180deg,#e2c57d,#a98943);color:#2a1d05;border:1px solid #8f7332;border-radius:10px;padding:12px 20px;font:700 15px Arial,sans-serif;cursor:pointer}
+.bpRead{font:var(--fs)/1.9 Arial,sans-serif;color:var(--body)}.bpRead p{margin:0 0 14px}.chList{display:flex;flex-direction:column;gap:8px}.chBtn{text-align:left;background:var(--card);color:var(--gold2);border:1px solid var(--line);border-radius:10px;padding:13px 14px;font:600 15px Arial,sans-serif;cursor:pointer}
+</style>
+<script>
+/* ===== Halaman detail novel (layar penuh) + pembelian sungguhan ===== */
+(()=>{
+/* Alamat server pembelian (Cloudflare Worker), contoh: "https://tiandao-api.NAMAKAMU.workers.dev"
+   Kosong = MODE DEMO (tombol Beli langsung membuka kunci di HP itu saja, tanpa bayar). */
+const API_BASE="";
+const T="Ten Youthful Souls Forging Multiverse Justice",C="Kaisar Cang Ling Xiao";
+const COL={t1:["#1f6b4c","#0f3a2a"],t2:["#7a2a2f","#3d1216"],t3:["#1f6b6b","#0f3a3a"],t4:["#5a2a6b","#2c123a"],c1:["#1f4a7a","#0f243d"],c2:["#6b4a1f","#3a270f"],c3:["#5f6b1f","#2f360f"],c4:["#4a4f5a","#23262d"]};
+const BOOKS={};for(const k in COL)BOOKS[k]={title:k[0]==="t"?T:C,season:"Season "+k[1],c:COL[k]};
+BOOKS.t1.paid=true;BOOKS.t1.flag="s1";BOOKS.t1.bio=["Dari seorang teknisi biasa yang terlempar ke dunia sihir, hingga menjadi ancaman tak terduga bagi penguasa 22 alam semesta.",
+"Semuanya bermula dari langkah pertama yang tak pernah direncanakan. Mamat, seorang pemuda dengan latar belakang teknisi biasa, tiba-tiba terseret masuk ke dunia sihir yang penuh keajaiban, monster buas, dan hukum semesta yang asing. Di tengah dunia yang keras itu, sebuah Sistem misterius bangkit mendampinginya, membekali perjalanan penuh tantangan dari misi-misi awal, perburuan Permata Sihir Biru, hingga pertarungan berdarah di tempat-tempat berbahaya.",
+"Awalnya, perjuangan Mamat tampak jelas: bertahan hidup, menguatkan diri, dan menghadapi ancaman Raja Vorgon beserta pasukannya yang mengancam kedamaian dunia sihir tersebut. Namun, semakin jauh mereka melangkah, menembus rahasia masa lalu Pangeran Hendrik, menguji batas kemampuan di arena ekstrem, hingga menyatukan serpihan takdir di antara para kaisar dan sekutu kebenaran yang jauh lebih kelam mulai terkuak.",
+"Raja Vorgon bukanlah dalang terakhir. Di balik layar kekacauan besar yang mengguncang berbagai Alam Semesta, berdiri sosok Zenos, entitas mengerikan yang menguasai 22 dari 55 alam semesta. Menyadari bahwa nasib seluruh dunia dan kehidupan mereka hanyalah bagian dari permainan yang jauh lebih besar, tujuan Mamat pun berubah total. Ia tidak lagi sekadar berjuang untuk menumbangkan Raja Vorgon, melainkan bersiap menantang bayang-bayang kekuasaan Zenos yang membentang melintasi batas realitas.",
+"Diwarnai perpaduan aksi sihir dan pertarungan brutal, intrik sistem, humor khas, serta pengorbanan di tengah kehancuran, Season 1 mengikuti evolusi Mamat dari seorang pemuda biasa menjadi bagian dari pusaran takdir yang tak bisa lagi dihindari."];
+const demoGet=()=>{try{return JSON.parse(localStorage.getItem("td_buy")||"{}")}catch(e){return{}}};
+const demoPut=o=>{try{localStorage.setItem("td_buy",JSON.stringify(o))}catch(e){}};
+const ownCache=()=>{try{return JSON.parse(localStorage.getItem("td_own")||"{}")}catch(e){return{}}};
+const ownSet=(em,v)=>{try{const o=ownCache();o[em]=v;localStorage.setItem("td_own",JSON.stringify(o))}catch(e){}};
+const cachedOwned=()=>API_BASE?!!(gUser&&gUser.email&&ownCache()[gUser.email.toLowerCase()]):!!demoGet().s1;
+const fillPrice=()=>document.querySelectorAll("[data-price]").forEach(el=>{const s=cachedOwned()?"b":"u";if(el.dataset.f===s)return;el.dataset.f=s;
+  el.innerHTML=s==="b"?"✓ Sudah dibeli":'Rp25.000<small>Diskon pembeli pertama</small>'});
+const ag=document.getElementById("articleGrid");
+if(ag)new MutationObserver(fillPrice).observe(ag,{childList:true});fillPrice();
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function token(ask){if(tokOk())return gTok;if(!ask)return null;gSignIn(false);for(let i=0;i<200;i++){await sleep(300);if(tokOk())return gTok}return null}
+async function api(path,opt,ask){const tk=await token(ask);const h={};if(tk)h.Authorization="Bearer "+tk;if(opt&&opt.body)h["Content-Type"]="application/json";
+  try{const r=await fetch(API_BASE+path,Object.assign({headers:h},opt||{}));let d={};try{d=await r.json()}catch(e){}d._s=r.status;return d}catch(e){return{error:"net",_s:0}}}
+const pg=document.createElement("div");pg.id="bookPage";pg.setAttribute("role","dialog");pg.setAttribute("aria-modal","true");document.body.appendChild(pg);
+let cur=null,st2="idle";/* idle | check | login | no | yes */
+const esc=s=>String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
+function shell(title,inner,back){return `<div class="bpBar"><button id="bpBack">← ${back}</button><b>${esc(title)}</b></div><div class="bpBody">${inner}</div>`}
+function actHtml(k){
+  const b=BOOKS[k];
+  if(!b.paid)return `<div class="bkd-buy"><button class="bpBtn" id="bpRead">📖 Baca ${esc(b.season)}</button></div>`;
+  if(!API_BASE){return bought_demo()?`<div class="bkd-buy"><div class="bkd-p"><b>✓ Sudah dibeli</b></div><button class="bpBtn" id="bpRead">📖 Baca ${esc(b.season)}</button></div>`
+    :`<div class="bkd-buy"><div class="bkd-p"><b>Rp25.000</b><span>Diskon pembeli pertama</span></div><button class="bpBtn" id="bpBuy">Beli Rp25.000</button><p class="bkd-lock">🔒 Bayar dulu untuk bisa membaca novel ini. (mode demo)</p></div>`}
+  const price=`<div class="bkd-p"><b>Rp25.000</b><span>Diskon pembeli pertama</span></div>`;
+  if(st2==="yes")return `<div class="bkd-buy"><div class="bkd-p"><b>✓ Sudah dibeli</b></div><button class="bpBtn" id="bpRead">📖 Baca ${esc(b.season)}</button></div>`;
+  if(st2==="check")return `<div class="bkd-buy">${price}<p class="bkd-lock">⏳ Memeriksa status pembelian…</p></div>`;
+  if(st2==="login")return `<div class="bkd-buy">${price}<button class="bpBtn" id="bpLogin">🔐 Masuk dengan Google untuk membeli</button><p class="bkd-lock">Pembelian dicatat ke akun Google-mu, jadi tetap aman kalau ganti HP.</p></div>`;
+  return `<div class="bkd-buy">${price}<button class="bpBtn" id="bpBuy">Beli Rp25.000</button><button class="bpBtn" id="bpCek" style="margin-left:8px;background:transparent;color:var(--gold2);border-color:var(--gold)">Sudah bayar? Cek status</button><p class="bkd-lock">🔒 Bayar dulu untuk bisa membaca novel ini.</p></div>`}
+const bought_demo=()=>!!demoGet().s1;
+function detail(k){
+  const b=BOOKS[k];
+  const bio=b.bio?`<p class="bkd-tag">${esc(b.bio[0])}</p>`+b.bio.slice(1).map(p=>`<p>${esc(p)}</p>`).join(""):`<p class="bkd-empty">Belum ada bio</p>`;
+  pg.innerHTML=shell("Detail Novel",`<div class="bkd"><div class="bk-cover bkd-cover" style="--c1:${b.c[0]};--c2:${b.c[1]}"></div><div class="bkd-info"><h1>${esc(b.title)}</h1><div class="bkd-s">${esc(b.season)}</div></div></div><div class="bkd-bio"><b class="bkd-bh">Bio</b>${bio}</div><div id="bpAct">${actHtml(k)}</div>`,"Kembali");
+}
+const refreshAct=()=>{const a=document.getElementById("bpAct");if(a&&cur)a.innerHTML=actHtml(cur)};
+async function checkAccess(ask){
+  const b=BOOKS[cur];if(!API_BASE||!b.paid)return;
+  const k=cur;st2="check";refreshAct();
+  if(!(await token(ask))){st2="login";if(cur===k)refreshAct();return}
+  const d=await api("/access?book="+k,null,false);
+  if(cur!==k)return;
+  if(d.owned){st2="yes";if(gUser&&gUser.email)ownSet(gUser.email.toLowerCase(),1);fillPrice()}
+  else if(d._s===401){st2="login"}else st2="no";
+  refreshAct();
+}
+async function reader(k){
+  const b=BOOKS[k];
+  const head=`<h1 style="font:700 22px/1.3 'Noto Serif',Georgia,serif;color:var(--gold2);margin:0 0 4px">${esc(b.title)}</h1><div class="bkd-s" style="margin-bottom:18px">${esc(b.season)}</div>`;
+  if(!API_BASE){pg.innerHTML=shell(b.season,head+`<div class="bpRead"><p>Isi novel belum tersedia.</p></div>`,"Detail");pg.scrollTop=0;return}
+  pg.innerHTML=shell(b.season,head+`<div class="bpRead"><p>Memuat daftar bab…</p></div>`,"Detail");pg.scrollTop=0;
+  const d=await api("/chapters?book="+k,null,true);
+  if(cur!==k)return;
+  let body;
+  if(d.error)body=`<p>${d._s===403?"Kamu belum membeli novel ini.":d._s===401?"Masuk dengan Google dulu untuk membaca.":"Gagal memuat bab. Coba lagi nanti."}</p>`;
+  else if(!d.chapters.length)body=`<p>Isi novel belum tersedia.</p>`;
+  else body=`<div class="chList">`+d.chapters.map(c=>`<button class="chBtn" data-ch="${+c.n}">${esc(c.title||("Bab "+c.n))}</button>`).join("")+`</div>`;
+  pg.innerHTML=shell(b.season,head+`<div class="bpRead">${body}</div>`,"Detail");pg.scrollTop=0;
+}
+async function chapter(k,n){
+  const b=BOOKS[k];pg.querySelector(".bpRead").innerHTML="<p>Memuat bab…</p>";
+  const d=await api("/chapter?book="+k+"&n="+n,null,true);
+  if(cur!==k)return;
+  const t=d.text!==undefined?d.text.split(/\n{2,}|\r\n\r\n/).map(p=>`<p>${esc(p).replace(/\n/g,"<br>")}</p>`).join(""):"<p>Bab tidak bisa dimuat.</p>";
+  pg.innerHTML=shell(b.season,`<div class="bkd-s" style="margin-bottom:14px">${esc(b.title)} — ${esc(b.season)}</div><div class="bpRead">${t}</div><div class="bkd-buy"><button class="bpBtn" id="bpToc">← Daftar bab</button></div>`,"Detail");pg.scrollTop=0;
+}
+function open(k){cur=k;st2="idle";detail(k);pg.scrollTop=0;pg.classList.add("show");document.documentElement.style.overflow="hidden";const m=document.getElementById("mascot");if(m)m.style.visibility="hidden";checkAccess(false)}
+function close(){pg.classList.remove("show");document.documentElement.style.overflow="";const m=document.getElementById("mascot");if(m)m.style.visibility="";cur=null}
+document.addEventListener("click",async e=>{
+  const t=e.target;if(!t.closest)return;
+  const bk=t.closest(".bk[data-book]");
+  if(bk&&BOOKS[bk.dataset.book]){e.stopPropagation();open(bk.dataset.book);return}
+  if(!pg.contains(t))return;
+  e.stopPropagation();
+  if(t.closest("#bpBack")){if(pg.querySelector(".bpRead")){detail(cur);checkAccess(false)}else close();return}
+  if(t.closest("#bpLogin")||t.closest("#bpCek")){checkAccess(true);return}
+  if(t.closest("#bpToc")){reader(cur);return}
+  const ch=t.closest("[data-ch]");if(ch){chapter(cur,ch.dataset.ch);return}
+  if(t.closest("#bpRead")){reader(cur);return}
+  if(t.closest("#bpBuy")){
+    if(!API_BASE){const o=demoGet();o.s1=1;demoPut(o);fillPrice();detail(cur);toast("Pembelian tercatat (mode demo)");return}
+    if(!(await token(true))){toast("Masuk dengan Google dulu untuk membeli");return}
+    toast("Membuat tagihan…");
+    const d=await api("/checkout",{method:"POST",body:JSON.stringify({book:cur})},false);
+    if(d.owned){checkAccess(false);return}
+    if(d.redirect_url){location.assign(d.redirect_url);return}
+    toast("Gagal membuat tagihan, coba lagi");return}
+},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&cur)close()});
 })();
 </script>
 </body>
